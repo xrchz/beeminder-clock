@@ -11,7 +11,7 @@ echo "${CONFIG} needs editing."; exit 2 # delete this line
 user=<your username>
 auth=<your auth token>
 goal=<the goal name>
-tmpfile=<file to store date> # delete line for default: /tmp/clockin
+clockfile=<file to store date> # delete line for default: /tmp/clockin
 totalfile=<file to store total> # delete line for default: /tmp/clocktotal
 backupfile=<file to store previous date> # delete line for default: none
 END
@@ -19,7 +19,7 @@ END
 fi
 source $CONFIG
 url=https://www.beeminder.com/api/v1/users/$user
-FILE=${tmpfile:-/tmp/clockin}
+FILE=${clockfile:-/tmp/clockin}
 TFILE=${totalfile:-/tmp/clocktotal}
 case $1 in
   "in")
