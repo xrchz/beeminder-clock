@@ -15,7 +15,7 @@ Usage
 
 Configuration
 ---------------
-  Define the following variables in the configuration file $HOME/.config/beeminder-clock.
+  Define the following variables in the configuration file `$HOME/.config/beeminder-clock`.
   The configuration file should be a valid shell script.
 
   - `user`       = Your Beeminder user name.
