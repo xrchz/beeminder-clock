@@ -56,5 +56,5 @@ case $1 in
   "reset")
     rm -f $TFILE
     ;;
-  *) die "usage: clock (in|check|out|send|sendv|total|reset)";;
+  *) die "usage: clock (in|check|out|send|sendv v|total|reset)";;
 esac
