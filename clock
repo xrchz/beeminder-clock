@@ -1,0 +1,60 @@
+#!/bin/sh
+die() { echo $1>&2; exit 1; }
+CONFIG=$HOME/.config/beeminder-clock
+if [ ! -f $CONFIG ]
+then
+  echo "$CONFIG file missing."
+  echo "Writing out template. Now go edit it."
+  cat << END >$CONFIG 
+#!/bin/sh
+echo "${CONFIG} needs editing."; exit 2 # delete this line
+user=<your username>
+auth=<your auth token>
+goal=<the goal name>
+tmpfile=<file to store date> # delete line for default: /tmp/clockin
+totalfile=<file to store total> # delete line for default: /tmp/clocktotal
+backupfile=<file to store previous date> # delete line for default: none
+END
+  exit 2
+fi
+source $CONFIG
+url=https://www.beeminder.com/api/v1/users/$user
+FILE=${tmpfile:-/tmp/clockin}
+TFILE=${totalfile:-/tmp/clocktotal}
+case $1 in
+  "in")
+    [ ! -f $FILE ] || die "have not clocked out"
+    date +%s >$FILE
+    ;;
+  "out")
+    v=$($0 check) && echo $(((v+$($0 total)))) > $TFILE && echo $v &&\
+    if [ -z $backupfile ]
+    then
+      rm -f $FILE
+    else
+      mv -f $FILE $backupfile
+    fi
+    ;;
+  "send")
+    v=$($0 out) && $0 sendv $v
+    ;;
+  "sendv")
+    curl --data "timestamp=$(date +%s)&value=$2&auth_token=$auth" "$url/goals/$goal/datapoints.json"
+    ;;
+  "check")
+    [ -f $FILE ] || die "have not clocked in"
+    echo $((($(date +%s)-$(<$FILE))/60))
+    ;;
+  "total")
+    if [ -f $TFILE ]
+    then
+      cat $TFILE
+    else
+      echo "0"
+    fi
+    ;;
+  "reset")
+    rm $TFILE
+    ;;
+  *) die "usage: clock (in|check|out|send|sendv|total|reset)";;
+esac
