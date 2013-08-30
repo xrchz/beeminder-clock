@@ -14,7 +14,7 @@ Usage
  - `clock reset`   : Reset the total to `0`.
 
 Configuration
-----------------
+---------------
   Define the following variables in the configuration file $HOME/.config/beeminder-clock.
   The configuration file should be a valid shell script.
 
@@ -24,3 +24,9 @@ Configuration
   - `clockfile`  = The file to store the date in when clocking in. (Defaults to `/tmp/clockin`.)
   - `totalfile`  = The file to store the total elapsed time. (Defaults to `/tmp/clocktotal`.)
   - `backupfile` = The file to store the previous date when clocking out. (Defaults to nothing, not stored.)
+
+Requirements
+----------------
+  - bash (possibly other shells work too)
+  - curl
+  - coreutils: cat, date, echo, mv, rm, test
