@@ -7,10 +7,11 @@ Usage
 ---------------
  - `clock in`      : Start the clock.
  - `clock check`   : Show the elapsed time.
- - `clock out`     : Stop the clock and show the elapsed time.
- - `clock send`    : Stop the clock and send the elapsed time to Beeminder.
+ - `clock out`     : Stop the clock, show the elapsed time, and add it to the total.
+ - `clock send`    : Stop the clock, send the elapsed time to Beeminder, and add it to the total.
  - `clock sendv v` : Send `v` to Beeminder.
  - `clock total`   : Show the total elapsed time since the last reset.
+ - `clock add v`   : Add `v` to the total.
  - `clock reset`   : Reset the total to `0`.
 
 Configuration

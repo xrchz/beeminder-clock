@@ -27,7 +27,7 @@ case $1 in
     date +%s >$FILE
     ;;
   "out")
-    v=$($0 check) && echo $(((v+$($0 total)))) > $TFILE && echo $v &&\
+    v=$($0 check) && $($0 add $v) && echo $v &&\
     if [ -z $backupfile ]
     then
       rm -f $FILE
@@ -52,6 +52,9 @@ case $1 in
     else
       echo "0"
     fi
+    ;;
+  "add")
+    echo $((($($0 total)+$2))) > $TFILE
     ;;
   "reset")
     rm -f $TFILE
